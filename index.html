@@ -10,20 +10,37 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             background-color: #f5f5f5; /* Neutral background */
         }
-        .container {
+        .header {
             text-align: center;
+            margin-top: 20px;
+        }
+        .containers {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            width: 100%; 
+        }
+        .container {
+            text-align: left;
             padding: 20px;
             background-color: white; /* Keeps the container neutral */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-radius: 8px;
-            display: block; /* Adjust for vertical layout */
+            width: 80%; /* Set a fixed width for all containers */
+            max-width: 600px; /* Ensure a maximum width */
+            margin: 0 auto; /* Center the container horizontally */
         }
         h1 {
+            color: #376c8a; /* Color for headings */
+            margin-bottom: 10px;
+        }
+        h2 {
             color: #376c8a; /* Color for headings */
             margin-bottom: 20px;
         }
@@ -46,34 +63,38 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>GIS Аналитика для Алматинской Агломерации</h1>
-    <h2>Модель «центр-периферия»</h2>
-
-    <p>Базовая карта</p>
-    <li>Предприятия агрегированы в точки на карте</li>
-    <li>Матрица весов объединенная Queen и DistanceWeights (250м)</li>
-    <li>P-value = 0.2</li>
-    <a href="PointWeightMatrix.html" target = "_blank">Матрица весов для точек</a>
-    <a href="AlmatyMoranClMap250mNew.html" target = "_blank">Модель «центр-периферия»</a>
-    <a href="AlmatyMoranClMap250mNewSign.html" target = "_blank">Модель «центр-периферия», только значимые точки</a>
-    <br>
-    <p>Карта гексагонов</p>
-    <li>Точки агрегированы в гексагоны на карте (~15,000sqm)</li>
-    <li>Матрица весов Queen</li>
-    <li>P-value = 0.2</li>
-    <a href="HexWeightMatrix.html" target = "_blank">Матрица весов для гексагонов</a>
-    <a href="AlmatyMoranClMap250mHex.html" target = "_blank">Модель «центр-периферия» для гексагонов</a>
-    <a href="AlmatyMoranClMap250mHexSign.html" target = "_blank">Модель «центр-периферия», только значимые гексагоны</a>
-
-    <p>Карта с дополнительными точками. Предыдущие карты не учитывают точки в агломерации Алматы, где не указаны адреса. 
-        Таких дата-поинтов очень много, поэтому карты выше могут не справедливо преуменьшать масштаб агломерации.</p>
-    <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
-    <a href="AlmatyMoranClMap250m.html" target = "_blank">Модель «центр-периферия»</a>
-    <a href="AlmatyMoranClMap250mSign.html" target = "_blank">Модель «центр-периферия», только значимые точки</a>
-
-    
-</div>
+    <div class="header">
+        <h1>GIS Аналитика для Алматинской Агломерации</h1>
+        <h2>Модель «центр-периферия»</h2>
+    </div>
+    <div class="containers">
+        <div class="container">
+            <h3>Базовая карта</h3>
+            <li>Предприятия агрегированы в точки на карте</li>
+            <li>Матрица весов объединенная Queen и DistanceWeights (250м)</li>
+            <li>P-value = 0.2</li>
+            <a href="PointWeightMatrix.html" target="_blank">Матрица весов для точек</a>
+            <a href="AlmatyMoranClMap250mNew.html" target="_blank">Модель «центр-периферия»</a>
+            <a href="AlmatyMoranClMap250mNewSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
+        </div>
+        <div class="container">
+            <h3>Карта гексагонов</h3>
+            <li>Точки агрегированы в гексагоны на карте (~15,000sqm)</li>
+            <li>Матрица весов Queen</li>
+            <li>P-value = 0.2</li>
+            <a href="HexWeightMatrix.html" target="_blank">Матрица весов для гексагонов</a>
+            <a href="AlmatyMoranClMap250mHex.html" target="_blank">Модель «центр-периферия» для гексагонов</a>
+            <a href="AlmatyMoranClMap250mHexSign.html" target="_blank">Модель «центр-периферия», только значимые гексагоны</a>
+        </div>
+        <div class="container">
+            <h3>Карта с дополнительными точками</h3>
+            <li>Предыдущие карты не учитывают точки в агломерации Алматы, где не указаны адреса. 
+                Таких дата-поинтов очень много, поэтому карты выше могут не справедливо преуменьшать масштаб агломерации.</li>
+            <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
+            <a href="AlmatyMoranClMap250m.html" target="_blank">Модель «центр-периферия»</a>
+            <a href="AlmatyMoranClMap250mSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
+        </div>
+    </div>
 
 </body>
 </html>
