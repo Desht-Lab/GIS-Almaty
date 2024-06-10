@@ -6,7 +6,7 @@
     <title>GIS Platform</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Gotham;
             margin: 0;
             padding: 0;
             display: flex;
@@ -47,9 +47,31 @@
 <body>
 
 <div class="container">
-    <h1>Map Links</h1>
-    <a href="AlmatyMoranClMap250mHex.html" >AlmatyMoranClMap250mHex</a>
-    <a href="AlmatyMoranClMap250mHexSign.html" >AlmatyMoranClMap250mHexSign</a>
+    <h1>GIS Аналитика для Алматинской Агломерации</h1>
+    <h2>Модель «центр-периферия»</h2>
+
+    <p>Базовая карта</p>
+    <li>Предприятия агрегированы в точки на карте</li>
+    <li>Матрица весов объединенная Queen и DistanceWeights (250м)</li>
+    <li>P-value = 0.2</li>
+    <a href="PointWeightMatrix.html" target = "_blank">Матрица весов для точек</a>
+    <a href="AlmatyMoranClMap250mNew.html" target = "_blank">Модель «центр-периферия»</a>
+    <a href="AlmatyMoranClMap250mNewSign.html" target = "_blank">Модель «центр-периферия», только значимые точки</a>
+    <br>
+    <p>Карта гексагонов</p>
+    <li>Точки агрегированы в гексагоны на карте (~15,000sqm)</li>
+    <li>Матрица весов Queen</li>
+    <li>P-value = 0.2</li>
+    <a href="HexWeightMatrix.html" target = "_blank">Матрица весов для гексагонов</a>
+    <a href="AlmatyMoranClMap250mHex.html" target = "_blank">Модель «центр-периферия» для гексагонов</a>
+    <a href="AlmatyMoranClMap250mHexSign.html" target = "_blank">Модель «центр-периферия», только значимые гексагоны</a>
+
+    <p>Карта с дополнительными точками. Предыдущие карты не учитывают точки в агломерации Алматы, где не указаны адреса. 
+        Таких дата-поинтов очень много, поэтому карты выше могут не справедливо преуменьшать масштаб агломерации.</p>
+    <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
+    <a href="AlmatyMoranClMap250m.html" target = "_blank">Модель «центр-периферия»</a>
+    <a href="AlmatyMoranClMap250mSign.html" target = "_blank">Модель «центр-периферия», только значимые точки</a>
+
     
 </div>
 
