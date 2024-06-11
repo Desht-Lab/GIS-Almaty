@@ -45,7 +45,7 @@
             color: #376c8a; /* Color for headings */
             margin-bottom: 20px;
         }
-        a {
+        .link {
             display: block; /* Change to block to stack vertically */
             margin: 10px auto; /* Center align the links */
             padding: 10px 15px;
@@ -57,7 +57,7 @@
             width: 95%; /* Ensure the width is consistent */
             text-align: center; /* Center the text */
         }
-        a:hover {
+        .link:hover {
             background-color: #f3cca1; /* Background color on hover */
             color: #376c8a; /* Text color on hover */
         }
@@ -71,7 +71,7 @@
 <body>
 
     <div class="header">
-        <img src="Desht_lab_blue.png" alt="Desht Lab Logo" class="logo">
+        <a  href="https://www.desht.org/lab"><img src="Desht_lab_blue.png" alt="Desht Lab Logo" class="logo" > </a>
         <h1>GIS Аналитика для Алматинской Агломерации</h1>
     </div>
     <div class="containers">
@@ -80,37 +80,37 @@
             <li>Предприятия агрегированы в точки на карте</li>
             <li>Матрица весов объединенная Queen и DistanceWeights (250м)</li>
             <li>P-value = 0.2, который определяет порог значимости точек</li>
-            <a href="PointsWeightsMatrix.html" target="_blank">Матрица весов для точек</a>
-            <a href="AlmatyMoranClMap250mNew.html" target="_blank">Модель «центр-периферия»</a>
-            <a href="AlmatyMoranClMap250mNewSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
+            <a class = "link" href="PointsWeightsMatrix.html" target="_blank">Матрица весов для точек</a>
+            <a class = "link" href="AlmatyMoranClMap250mNew.html" target="_blank">Модель «центр-периферия»</a>
+            <a class = "link" href="AlmatyMoranClMap250mNewSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
             <h3>Модель «центр-периферия»: Карта с дополнительными точками</h3>
             <li>Предыдущие карты не учитывают точки в агломерации Алматы, где не указаны адреса. 
                 Таких дата-поинтов очень много, поэтому карты выше могут не справедливо преуменьшать масштаб агломерации.</li>
             <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
-            <a href="AlmatyMoranClMap250m.html" target="_blank">Модель «центр-периферия»</a>
-            <a href="AlmatyMoranClMap250mSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
+            <a class = "link" href="AlmatyMoranClMap250m.html" target="_blank">Модель «центр-периферия»</a>
+            <a class = "link" href="AlmatyMoranClMap250mSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
         </div>
         <div class="container">
             <h3>Модель «центр-периферия»: Карта шестиугольников</h3>
             <li>Точки агрегированы в шестиугольники на карте (~15,000sqm), шестиугольники позволяют сделать кластеры менее разбросанными</li>
             <li>Матрица весов Queen</li>
             <li>P-value = 0.2, который определяет порог значимости точек</li>
-            <a href="HexWeightsMatrix.html" target="_blank">Матрица весов для шестиугольников</a>
-            <a href="AlmatyMoranClMap250mHex.html" target="_blank">Модель «центр-периферия» для шестиугольников</a>
-            <a href="AlmatyMoranClMap250mHexSign.html" target="_blank">Модель «центр-периферия», только значимые шестиугольники</a>
+            <a class = "link" href="HexWeightsMatrix.html" target="_blank">Матрица весов для шестиугольников</a>
+            <a class = "link" href="AlmatyMoranClMap250mHex.html" target="_blank">Модель «центр-периферия» для шестиугольников</a>
+            <a class = "link" href="AlmatyMoranClMap250mHexSign.html" target="_blank">Модель «центр-периферия», только значимые шестиугольники</a>
         </div>
         
     
         <div class="container">
             <h3>AgglomerativeClustering с учетом матрицы весов без scaling (сильнее влияние занятости)</h3>
             <li>Точки агрегированы в шестиугольники на карте (~15,000sqm)</li>
-            <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
+            <li>Предприятия  в агломерации Алматы без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
             <li>Матрица весов Queen </li>
             <li>Добавлены дополнительные "пустые шестиугольники", чтобы матрица весов была полностью объединена</li>
             <li>Учитывается сумма условной затяточти и ОКЕДы на шестиугольнике</li>
-            <a href="AgloHexFilledHexK15.html" target="_blank">AgglomerativeClustering</a>
+            <a class = "link" href="AgloHexFilledHexK15.html" target="_blank">AgglomerativeClustering</a>
             <h3>AgglomerativeClustering с учетом матрицы с scaling (сильнее влияние ОКЕД)</h3>
-            <a href="AgloHexFilledHexK15Scaled.html" target="_blank">AgglomerativeClustering Scaled</a>
+            <a class = "link" href="AgloHexFilledHexK15Scaled.html" target="_blank">AgglomerativeClustering Scaled</a>
         </div>
              
     </div>
@@ -123,18 +123,18 @@
             <li>Взяты КАТО9</li>
             <li>Матрица весов Queen</li>
             <li>P-value = 0.4, который определяет порог значимости точек</li>
-            <a href="WeightsMatrixOblast.html" target="_blank">Матрица весов</a>
-            <a href="AlmatyMoranFlat.html" target="_blank">Модель «центр-периферия»</a>
-            <a href="AlmatyOblastMoranColumns.html" target="_blank">Модель «центр-периферия», столбчатая</a>
+            <a class = "link" href="WeightsMatrixOblast.html" target="_blank">Матрица весов</a>
+            <a class = "link" href="AlmatyMoranFlat.html" target="_blank">Модель «центр-периферия»</a>
+            <a class = "link" href="AlmatyOblastMoranColumns.html" target="_blank">Модель «центр-периферия», столбчатая</a>
            
         </div>
         <div class="container">
             <h3>ECI и Регионализация</h3>
             
-            <a href="Almaty_Region_Night_ECI.html" target="_blank">Карта ECI</a>
+            <a class = "link" href="Almaty_Region_Night_ECI.html" target="_blank">Карта ECI</a>
   
             
-            <a href="ACOblastScaled.html" target="_blank">AgglomerativeClustering с учетом матрицы весов scaled</a>
+            <a class = "link" href="ACOblastScaled.html" target="_blank">AgglomerativeClustering с учетом матрицы весов scaled</a>
             <p>Регионализация позволяет выделить КАТО из общей массы и ограничить Аматинскую агломерацию, выделить ее центр. Если смотреть на ECI, Кластеры образуют схожие по сложности КАТО</p>
         </div>
     </div>
