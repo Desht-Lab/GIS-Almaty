@@ -33,7 +33,7 @@
             background-color: white; /* Keeps the container neutral */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-radius: 8px;
-            width: 80%; /* Set a fixed width for all containers */
+            width: 40%; /* Set a fixed width for all containers */
             max-width: 600px; /* Ensure a maximum width */
             margin: 0 auto; /* Center the container horizontally */
         }
@@ -67,20 +67,26 @@
 
     <div class="header">
         <h1>GIS Аналитика для Алматинской Агломерации</h1>
-        <h2>Модель «центр-периферия»</h2>
+        
     </div>
     <div class="containers">
         <div class="container">
-            <h3>Базовая карта</h3>
+            <h3>Модель «центр-периферия»: Базовая карта</h3>
             <li>Предприятия агрегированы в точки на карте</li>
             <li>Матрица весов объединенная Queen и DistanceWeights (250м)</li>
             <li>P-value = 0.2, который определяет порог значимости точек</li>
             <a href="PointsWeightsMatrix.html" target="_blank">Матрица весов для точек</a>
             <a href="AlmatyMoranClMap250mNew.html" target="_blank">Модель «центр-периферия»</a>
             <a href="AlmatyMoranClMap250mNewSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
+            <h3>Модель «центр-периферия»: Карта с дополнительными точками</h3>
+            <li>Предыдущие карты не учитывают точки в агломерации Алматы, где не указаны адреса. 
+                Таких дата-поинтов очень много, поэтому карты выше могут не справедливо преуменьшать масштаб агломерации.</li>
+            <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
+            <a href="AlmatyMoranClMap250m.html" target="_blank">Модель «центр-периферия»</a>
+            <a href="AlmatyMoranClMap250mSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
         </div>
         <div class="container">
-            <h3>Карта шестиугольников</h3>
+            <h3>Модель «центр-периферия»: Карта шестиугольников</h3>
             <li>Точки агрегированы в шестиугольники на карте (~15,000sqm), шестиугольники позволяют сделать кластеры менее разбросанными</li>
             <li>Матрица весов Queen</li>
             <li>P-value = 0.2, который определяет порог значимости точек</li>
@@ -88,30 +94,43 @@
             <a href="AlmatyMoranClMap250mHex.html" target="_blank">Модель «центр-периферия» для шестиугольников</a>
             <a href="AlmatyMoranClMap250mHexSign.html" target="_blank">Модель «центр-периферия», только значимые шестиугольники</a>
         </div>
-        <div class="container">
-            <h3>Карта с дополнительными точками</h3>
-            <li>Предыдущие карты не учитывают точки в агломерации Алматы, где не указаны адреса. 
-                Таких дата-поинтов очень много, поэтому карты выше могут не справедливо преуменьшать масштаб агломерации.</li>
-            <li>Предприятия без адреса распределены равномерно на уже существуещие адреса внутри своего КАТО</li>
-            <a href="AlmatyMoranClMap250m.html" target="_blank">Модель «центр-периферия»</a>
-            <a href="AlmatyMoranClMap250mSign.html" target="_blank">Модель «центр-периферия», только значимые точки</a>
-        </div>
-    </div>
-    <div class="containers">
+        
+    
         <div class="container">
             <h3>AgglomerativeClustering с учетом матрицы весов без scaling (сильнее влияние занятости)</h3>
             <li>Точки агрегированы в шестиугольники на карте (~15,000sqm)</li>
-            <li>Матрица весов объединенная Queen </li>
+            <li>Матрица весов Queen </li>
             <li>Добавлены дополнительные "пустые шестиугольники", чтобы матрица весов была полностью объединена</li>
             <li>Учитывается сумма условной затяточти и ОКЕДы на шестиугольнике</li>
-            <a href="AgloHexFilledHexK15.html" target="_blank">Модель «центр-периферия»</a>
+            <a href="AgloHexFilledHexK15.html" target="_blank">AgglomerativeClustering</a>
+            <h3>AgglomerativeClustering с учетом матрицы с scaling (сильнее влияние ОКЕД)</h3>
+            <a href="AgloHexFilledHexK15Scaled.html" target="_blank">AgglomerativeClustering Scaled</a>
+        </div>
+             
+    </div>
+    <div class="header">
+        <h1>GIS Аналитика для Алматинской Области</h1>
+    </div>
+    <div class="containers">
+        <div class="container">
+            <h3>Модель «центр-периферия»</h3>
+            <li>Взяты КАТО9</li>
+            <li>Матрица весов Queen</li>
+            <li>P-value = 0.4, который определяет порог значимости точек</li>
+            <a href="WeightsMatrixOblast.html" target="_blank">Матрица весов</a>
+            <a href="AlmatyMoranFlat.html" target="_blank">Модель «центр-периферия»</a>
+            <a href="AlmatyOblastMoranColumns.html" target="_blank">Модель «центр-периферия», столбчатая</a>
+           
         </div>
         <div class="container">
-            <h3>AgglomerativeClustering с учетом матрицы с scaling (сильнее влияние ОКЕД)</h3>
-            <a href="AgloHexFilledHexK15Scaled.html" target="_blank">Модель «центр-периферия»</a>
+            <h3>ECI и Регионализация</h3>
+            
+            <a href="Almaty_Region_Night_ECI.html" target="_blank">Карта ECI</a>
+  
+            
+            <a href="ACOblastScaled.html" target="_blank">AgglomerativeClustering с учетом матрицы весов scaled</a>
+            
         </div>
-
-        
     </div>
 </body>
 </html>
