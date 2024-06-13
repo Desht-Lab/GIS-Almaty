@@ -21,11 +21,12 @@
         }
         .containers {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-         
+            flex-wrap: wrap; /* Allows wrapping of containers */
+            align-items: flex-start; /* Align containers to the top */
+            justify-content: center; /* Center containers horizontally */
             padding: 20px;
             width: 100%; 
+            gap: 20px; /* Add gap between containers */
         }
         .container {
             text-align: left;
@@ -33,9 +34,9 @@
             background-color: white; /* Keeps the container neutral */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-radius: 8px;
-            width: 40%; /* Set a fixed width for all containers */
+            width: calc(50% - 40px); /* Set width to 50% minus the gap */
             max-width: 450px; /* Ensure a maximum width */
-            margin: 0 auto; /* Center the container horizontally */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
         h1 {
             color: #376c8a; /* Color for headings */
