@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GIS Platform</title>
+    <title>GIS Platform Gallery</title>
     <link rel="stylesheet" href="https://desht-lab.github.io/Gotham/stylesheet.css">
     <style>
         body {
@@ -20,48 +20,39 @@
             text-align: center;
             margin-top: 20px;
         }
-        .containers {
+        .gallery {
             display: flex;
-            flex-wrap: wrap; /* Allows wrapping of containers */
-            align-items: flex-start; /* Align containers to the top */
-            justify-content: center; /* Center containers horizontally */
+            flex-wrap: wrap; /* Allows wrapping of gallery items */
+            justify-content: center; /* Center gallery items horizontally */
             padding: 20px;
+            gap: 20px; /* Add gap between gallery items */
             width: 100%; 
-            gap: 20px; /* Add gap between containers */
+            max-width: 1200px; /* Max width of the gallery */
+            box-sizing: border-box;
         }
-        .container {
-            text-align: left;
-            padding: 20px;
-            background-color: white; /* Keeps the container neutral */
+        .gallery-item {
+            background-color: white; /* Keeps the item neutral */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-radius: 8px;
-            width: calc(50% - 40px); /* Set width to 50% minus the gap */
-            max-width: 450px; /* Ensure a maximum width */
+            width: calc(33.333% - 40px); /* Set width to 1/3 minus the gap */
+            max-width: 300px; /* Ensure a maximum width */
             box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            overflow: hidden; /* Hide overflow */
+            text-align: center; /* Center content */
+        }
+        .gallery-item img {
+            width: 100%; /* Make image fill the gallery item */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+        }
+        .gallery-item h3 {
+            color: #376c8a; /* Color for headings */
+            padding: 10px;
+            
         }
         h1 {
             color: #376c8a; /* Color for headings */
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: #376c8a; /* Color for headings */
-            margin-bottom: 20px;
-        }
-        .link {
-            display: block; /* Change to block to stack vertically */
-            margin: 10px auto; /* Center align the links */
-            padding: 10px 15px;
-            background-color: #376c8a; /* Background color for links */
-            color: #f3cca1; /* Text color for links */
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-            width: 95%; /* Ensure the width is consistent */
-            text-align: center; /* Center the text */
-        }
-        .link:hover {
-            background-color: #f3cca1; /* Background color on hover */
-            color: #376c8a; /* Text color on hover */
+            
         }
         .logo {
             width: 150px; /* Adjust the width as needed */
@@ -73,64 +64,19 @@
 <body>
 
     <div class="header">
-        <a  href="https://www.desht.org/lab"><img src="Desht_lab_blue.png" alt="Desht Lab Logo" class="logo" > </a>
-        <h1>GIS-аналитика для Алматинской агломерации</h1>
+        <a href="https://www.desht.org/lab"><img src="Desht_lab_blue.png" alt="Desht Lab Logo" class="logo"></a>
+        <h1>Гео-аналитика для Алматинской агломерации</h1>
     </div>
-    <div class="containers">
-        
-        <div class="container">
-            <h3>Модель «центр-периферия»: карта шестиугольников</h3>
-            <li>Точки агрегированы в шестиугольники на карте (~15,000 sqm), шестиугольники позволяют сделать кластеры менее разбросанными</li>
-            <li>Матрица весов Queen</li>
-            <li>P-value = 0.3, который определяет порог значимости точек</li>
-            <a class = "link" href="AlmatyAgloSpread.html" target="_blank">Распределение занятости на карте Алматы</a>
-            <a class = "link" href="HexWeightsMatrixAglomeration.html" target="_blank">Матрица весов для шестиугольников</a>
-            <a class = "link" href="AlmatyMoranClMapHex.html" target="_blank">Модель «центр-периферия» для шестиугольников</a>
-            <a class = "link" href="AlmatyMoranClMapHexFlat.html" target="_blank">Модель «центр-периферия» для шестиугольников, плоская</a>
-            <a class = "link" href="AlmatyMoranClMapHexSign.html" target="_blank">Модель «центр-периферия», только значимые шестиугольники</a>
+    <div class="gallery">
+        <div class="gallery-item">
+            <a href="ACSections19Aglo.html">
+                <img src="AlmatyClustering.bmp" alt="Preview of Clusters of Almaty Agglomeration">
+            </a>
+            <h3>Кластеры Алматинской агломерации</h3>
         </div>
         
-    
-        
-        <div class="container">
-            <h3>Agglomerative Clustering с учетом матрицы весов</h3>
-            <li>Точки агрегированы в шестиугольники на карте (~100,000 sqm)</li>
-            <li>Матрица весов Queen </li>
-            <li>Добавлены дополнительные "пустые шестиугольники", чтобы матрица весов была полностью объединена</li>
-            <li>Учитывается сумма условной занятости в секциях на шестиугольнике</li>
-            <li>Переменные взяты в натуральный логарифм</li>
-            
-            <a class = "link" href="ACSections19Aglo.html">Кластеры Алматинской агломерации</a>
-          
-        
-        </div>
-        
-             
+        <!-- Add more gallery items here in the same format -->
     </div>
-    <div class="header">
-        <h1>GIS-аналитика для Алматинской области</h1>
-    </div>
-    <div class="containers">
-        <div class="container">
-            <h3>Модель «центр-периферия»</h3>
-            <li>Взяты КАТО-9</li>
-            <li>Матрица весов Queen</li>
-            <li>P-value = 0.4, который определяет порог значимости точек</li>
-            <a class = "link" href="WeightsMatrixOblast.html" target="_blank">Матрица весов</a>
-            <a class = "link" href="AlmatyMoranFlat.html" target="_blank">Модель «центр-периферия»</a>
-            <a class = "link" href="AlmatyOblastMoranColumns.html" target="_blank">Модель «центр-периферия», столбчатая</a>
-           
-        </div>
-        <div class="container">
-            <h3>ECI и Регионализация</h3>
-            
-            <a class = "link" href="Almaty_Region_Night_ECI.html" target="_blank">Карта ECI</a>
-  
-            
-            <a class = "link" href="ACOblastSections.html" target="_blank">Agglomerative Clustering</a>
-            <a class = "link" href="ClusterDescriptionOblast.html" target="_blank">Описание кластеров</a>
-            <p>Регионализация позволяет выделить КАТО из общей массы и ограничить Аматинскую агломерацию, выделить ее центр. Если смотреть на ECI, кластеры образуют схожие по сложности КАТО</p>
-        </div>
-    </div>
+
 </body>
 </html>
