@@ -1,5 +1,7 @@
 <html>
 <head><meta charset="utf-8" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <style>
     body {
         font-family: 'Gotham', sans-serif;
@@ -47,7 +49,7 @@
         padding: 20px;
         color: #f3cca1; /* Text color */
         background-color: #376c8a; /* Background color matching the menu */
-        text-align: center;
+        text-align: left;
         border-top: 1px solid #f3cca1; /* Add a border to separate the info box */
         font-size: 14px;
     }
@@ -76,7 +78,7 @@
         padding: 10px;
         margin-left: 260px; /* Adjusted margin to account for vertical menu */
         width: calc(100% - 280px); 
-        height: 96%; 
+        height: 95%; 
         gap: 10px; /* Add gap between containers */
         transition: margin-left 0.3s, width 0.3s;
   
@@ -93,6 +95,13 @@
         margin-left: 20px; /* Make containers full width when menu is retracted */
         width: calc(100% - 40px); 
     }
+    .formula-container {
+            width: 100%;
+            max-width: 300px; /* Adjust the width as needed */
+            margin: 0 auto;
+            text-align: center;
+            font-size: 0.9em; /* Reduce font size */
+        }
 </style>  
 </head>
 <body>
@@ -105,7 +114,15 @@
             <li><a href="ClusterDescription19.html">Доли секций по кластерам</a></li>
         </ul>
         <div class="info-box">
-            <p>Информация о кластерах и RCA</p>
+            <p>На данной карте изображена карта Алматинской агломерации, разделенная на кластеры и покрашена в зависимости от специализации кластера в отрасли. Специализауия определяется при помощи Revealed Comparative Advantage (RCA>1, означает присудтсвие специализации в отрасли)</p><br>
+            <div class="formula-container">
+                <p>
+                    $$RCA_{cluster,industry} =$$ <br>
+                    $$\frac{X_{cluster,industry}}{Total_{cluster}}$$ <br>
+                    $$\div$$ <br>
+                    $$\frac{Total_{industry}}{Total_{population}}$$
+                </p>
+            </div>
         </div>
     </nav>
 
