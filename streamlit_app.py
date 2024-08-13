@@ -34,7 +34,27 @@ df_one_hot = df_one_hot.drop(columns=['emp'])
 
 # Aggregate by 'x' and 'y' columns
 columns_to_sum = [col for col in df_one_hot.columns if col.startswith('Desc_')]
-df_aggregated = df_one_hot.groupby(['x', 'y'])[columns_to_sum].sum().reset_index()
+
+desc_values =  [col.split('_')[1] for col in columns_to_sum]
+
+# Create a DataFrame to sort
+temp_df = pd.DataFrame({
+    'columns_to_sum': columns_to_sum,
+    'Desc': desc_values
+})
+
+# Merge with fields DataFrame to get the corresponding grand_section_code
+merged_df = temp_df.merge(fields[['Desc', 'grand_section_code']], on='Desc', how='left')
+
+# Sort by grand_section_code and then by columns_to_sum
+sorted_df = merged_df.sort_values(by=['grand_section_code', 'columns_to_sum'])
+
+# Extract the sorted columns_to_sum
+sorted_columns_to_sum = sorted_df['columns_to_sum'].tolist()
+res,ind = np.unique(sorted_columns_to_sum, return_index = True)
+sorted_columns_to_sum = res[np.argsort(ind)]
+
+df_aggregated = df_one_hot.groupby(['x', 'y'])[sorted_columns_to_sum].sum().reset_index()
 
 def h3_hexagon_polygon(hex_id):
     """Convert H3 hex id to a Shapely polygon."""
@@ -48,7 +68,7 @@ resolution = 9
 df_aggregated['h3_index'] = df_aggregated.apply(lambda row: h3.geo_to_h3(float(row.y), float(row.x), resolution), axis=1)
 
 # Step 3: Aggregate data based on H3 indices
-hexagon_gdf = df_aggregated.groupby('h3_index')[columns_to_sum].sum().reset_index()
+hexagon_gdf = df_aggregated.groupby('h3_index')[sorted_columns_to_sum].sum().reset_index()
 
 # Step 4: Convert H3 indices to hexagon polygons
 hexagon_gdf['geometry'] = hexagon_gdf['h3_index'].apply(h3_hexagon_polygon)
@@ -61,7 +81,7 @@ hexagon_gdf.columns = [
     col.split('_')[1] if '_' in col else col
     for col in hexagon_gdf.columns
 ]
-modified_column_names = [col.split('_')[1] for col in columns_to_sum]
+modified_column_names = [col.split('_')[1] for col in sorted_columns_to_sum]
 hexagon_gdf['Все'] = hexagon_gdf[modified_column_names].sum(axis = 1)
 modified_column_names.insert(0, 'Все')
 
