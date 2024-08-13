@@ -1,7 +1,148 @@
 <html>
-<head><meta charset="utf-8" /></head>
+<head><meta charset="utf-8" />
+<style>
+    body {
+        font-family: 'Gotham', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .vertical-menu {
+        background-color: #376c8a; /* Updated to deep teal */
+        overflow: hidden;
+        width: 250px; /* Set a fixed width for the menu */
+        position: fixed; /* Make the menu fixed on the left side */
+        top: 0;
+        left: 0;
+        height: 100%; /* Full height */
+        transition: transform 0.3s, width 0.3s; /* Animation for retracting/expanding */
+    }
+    .vertical-menu.retracted {
+        transform: translateX(-250px); /* Move the menu off the screen */
+        width: 0; /* Hide the width when retracted */
+    }
+    .vertical-menu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    .vertical-menu ul li {
+        width: 100%;
+    }
+    .vertical-menu ul li a {
+        display: block;
+        color: #f3cca1; /* Updated to warm peach */
+        text-align: left;
+        padding: 14px 20px;
+        text-decoration: none;
+    }
+    .vertical-menu ul li a:hover {
+        background-color: #f3cca1; /* Updated to warm peach on hover */
+        color: #376c8a; /* Deep teal text on hover */
+    }
+    .vertical-menu ul li a.active {
+        background-color: #f3cca1; /* Highlighted background color */
+        color: #376c8a; /* Highlighted text color */
+    }
+    .info-box {
+        padding: 20px;
+        color: #f3cca1; /* Text color */
+        background-color: #376c8a; /* Background color matching the menu */
+        text-align: left;
+        border-top: 1px solid #f3cca1; /* Add a border to separate the info box */
+        font-size: 14px;
+    }
+    .toggle-button {
+        position: fixed; /* Keep the button fixed relative to the viewport */
+        top: 50%; /* Center the button vertically on the menu */
+        left: 250px; /* Position it just outside the expanded menu */
+        background-color: #f3cca1;
+        color: #376c8a;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        transform: rotate(90deg) translateY(-50%); /* Rotate and adjust alignment */
+        transform-origin: left top; /* Rotate around the top left corner */
+        transition: left 0.3s;
+    }
+    .vertical-menu.retracted ~ .toggle-button {
+        left: 15; /* Move the button to the left when the menu is retracted */
+       
+    }
+    .containers {
+        display: flex;
+        flex-wrap: wrap; /* Allows wrapping of containers */
+        align-items: flex-start; /* Align containers to the top */
+        justify-content: center; /* Center containers horizontally */
+        padding: 10px;
+        margin-left: 260px; /* Adjusted margin to account for vertical menu */
+        width: calc(100% - 280px); 
+        height: 95%; 
+        gap: 10px; /* Add gap between containers */
+        transition: margin-left 0.3s, width 0.3s;
+  
+    }
+    .containers.expanded {
+        margin-left: 260px;
+        width: calc(100% - 280px);
+    }
+    .containers.retracted {
+        margin-left: 20px;
+        width: calc(100% - 40px);
+    }
+    .vertical-menu.retracted ~ .containers {
+        margin-left: 20px; /* Make containers full width when menu is retracted */
+        width: calc(100% - 40px); 
+    }
+</style>  
+</head>
 <body>
-    <div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+    <nav class="vertical-menu" id="menu">
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="ACSections19Aglo.html"class="active">Кластеры</a></li>
+            <li><a href="FiltersClusterRCA.html"class="active" >RCA кластеров по отраслям</a></li>
+
+            <li><a href="ClusterDescription19.html" >Доли секций по кластерам</a></li>
+        </ul>
+        <div class="info-box">
+            <p>На карте представлена агломерация Алматы, разделенная на кластеры, окрашенные в зависимости от отраслевой специализации. Специализация кластеров определена с использованием Revealed Comparative Advantage (RCA). Если RCA>1, то это указывает на наличие отраслевой специализации. <br><br>
+                Выберите отрасль чтобы узнать специализацию кластеров в ней</p><br>
+            <div class="formula-container">
+                <p>
+                    $$RCA_{cluster,industry} =$$ <br>
+                    $$\frac{X_{cluster,industry}}{Total_{cluster}}$$ <br>
+                    $$\div$$ <br>
+                    $$\frac{Total_{industry}}{Total_{population}}$$
+                </p>
+        </div>
+    </nav>
+    
+    <!––  <button class="toggle-button" onclick="toggleMenu()">Свернуть<span class="sideNav__ExpandArrow"></span></button> ––>
+  
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            var containers = document.getElementById("containers");
+            var toggleButton = document.querySelector(".toggle-button");
+            
+            menu.classList.toggle("retracted");
+            containers.offsetWidth; 
+            if (menu.classList.contains("retracted")) {
+                toggleButton.innerHTML = 'Развернуть<span class="sideNav__ExpandArrow"></span>';
+                containers.style.marginLeft = "20px";
+                containers.style.width = "calc(100% - 40px)";
+            } else {
+                toggleButton.innerHTML = 'Свернуть<span class="sideNav__ExpandArrow"></span>';
+                containers.style.marginLeft = "260px";
+                containers.style.width = "calc(100% - 280px)";
+            }
+
+            // Trigger reflow to ensure the browser applies the style changes
+            containers.offsetWidth; 
+            
+        }
+    </script>
+    <div class='containers expanded' id="containers">                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
         <script type="text/javascript">/**
 * plotly.js v2.12.1
 * Copyright 2012-2022, Plotly, Inc.
