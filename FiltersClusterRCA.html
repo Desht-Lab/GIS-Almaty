@@ -1,5 +1,7 @@
 <html>
 <head><meta charset="utf-8" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <style>
     body {
         font-family: 'Gotham', sans-serif;
@@ -93,16 +95,22 @@
         margin-left: 20px; /* Make containers full width when menu is retracted */
         width: calc(100% - 40px); 
     }
+    .formula-container {
+            width: 100%;
+            max-width: 300px; /* Adjust the width as needed */
+            margin: 0 auto;
+            text-align: center;
+            font-size: 0.9em; /* Reduce font size */
+        }
 </style>  
 </head>
 <body>
     <nav class="vertical-menu" id="menu">
         <ul>
             <li><a href="index.html">Главная</a></li>
-            <li><a href="ACSections19Aglo.html"class="active">Кластеры</a></li>
-            <li><a href="FiltersClusterRCA.html"class="active" >RCA кластеров по отраслям</a></li>
-
-            <li><a href="ClusterDescription19.html" >Доли секций по кластерам</a></li>
+            <li><a href="ACSections19Aglo.html">Кластеры</a></li>
+            <li><a href="FiltersClusterRCA.html" class="active">RCA кластеров по отраслям</a></li>
+            <li><a href="ClusterDescription19.html">Доли секций по кластерам</a></li>
         </ul>
         <div class="info-box">
             <p>На карте представлена агломерация Алматы, разделенная на кластеры, окрашенные в зависимости от отраслевой специализации. Специализация кластеров определена с использованием Revealed Comparative Advantage (RCA). Если RCA>1, то это указывает на наличие отраслевой специализации. <br><br>
@@ -114,9 +122,10 @@
                     $$\div$$ <br>
                     $$\frac{Total_{industry}}{Total_{population}}$$
                 </p>
+            </div>
         </div>
     </nav>
-    
+
     <!––  <button class="toggle-button" onclick="toggleMenu()">Свернуть<span class="sideNav__ExpandArrow"></span></button> ––>
   
     <script>
@@ -142,7 +151,7 @@
             
         }
     </script>
-    <div class='containers expanded' id="containers">                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+    <div class='containers expanded' id="containers">                          <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
         <script type="text/javascript">/**
 * plotly.js v2.12.1
 * Copyright 2012-2022, Plotly, Inc.
