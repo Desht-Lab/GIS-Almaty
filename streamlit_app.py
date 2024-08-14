@@ -32,6 +32,7 @@ if remove_zeros:
     hexagon_gdf = hexagon_gdf[hexagon_gdf[selected_filter] > 0]
 
 # Apply logarithmic scale if selected
+hexagon_gdf['empl'] = hexagon_gdf[selected_filter]
 if log_scale:
     hexagon_gdf[selected_filter] = np.log1p(hexagon_gdf[selected_filter])
 
@@ -112,6 +113,9 @@ deck = pdk.Deck(
     layers=[layer],
     tooltip = {
     "html": "<b>{empl}</b> условная занятость на локации<br> <b>Топ 5 компаний:</b> {top_5_companies}",
+    "style": {"background": "grey", "color": "white", "font-family": '"Helvetica Neue", Arial', "z-index": "10000"},
+} if selected_filter == 'Все' else {
+    "html": "<b>{empl}</b> условная занятость на локации",
     "style": {"background": "grey", "color": "white", "font-family": '"Helvetica Neue", Arial', "z-index": "10000"},
 }
 )
