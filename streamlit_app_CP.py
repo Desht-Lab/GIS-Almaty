@@ -15,6 +15,9 @@ almaty_XY = pd.read_pickle('CP_Hex_res9.pkl')
 full_df = gpd.GeoDataFrame(almaty_XY)
 
 # Streamlit UI
+if st.button("Back"):
+    # Redirect to an external URL (Google in this case)
+    st.write('<meta http-equiv="refresh" content="0; url=https://desht-lab.github.io/GIS-Almaty/" />', unsafe_allow_html=True)
 st.title("Модель центр-периферия")
 
 

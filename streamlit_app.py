@@ -16,6 +16,9 @@ modified_column_names = fields_sorted['Desc'].unique().tolist()
 modified_column_names.insert(0, 'Все')
 
 # Streamlit UI
+if st.button("Back"):
+    # Redirect to an external URL (Google in this case)
+    st.write('<meta http-equiv="refresh" content="0; url=https://desht-lab.github.io/GIS-Almaty/" />', unsafe_allow_html=True)
 st.title("Описательная статистика Алматинской агломерации")
 
 # Filter selection
