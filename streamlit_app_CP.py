@@ -49,7 +49,7 @@ layer = pdk.Layer(
     stroked=False,  # Disable contours
     filled=True,
     wireframe=False,  # Disable wireframe
-   # elevation_scale=500 if log_scale else 5,  # Elevation scale based on log scale
+    elevation_scale=2,  # Elevation scale based on log scale
     extruded=use_elevation,
     pickable=True,
     auto_highlight=True,
@@ -57,9 +57,9 @@ layer = pdk.Layer(
 
 # Initial view settings based on the centroid of your map
 view_state = pdk.ViewState(
-    latitude=43.536224,
-    longitude=76.938093,
-    zoom=8,
+    latitude=43.262482, 
+    longitude=76.912051,
+    zoom=9,
     pitch=45 if use_elevation else 0,
 )
 
