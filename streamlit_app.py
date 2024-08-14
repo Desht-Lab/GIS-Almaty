@@ -18,6 +18,8 @@ modified_column_names.insert(0, 'Все')
 url = "https://desht-lab.github.io/GIS-Almaty/"
 
 
+
+
 go_back = """
     <script>
         function goBack() {
