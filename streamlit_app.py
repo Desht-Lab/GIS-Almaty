@@ -181,6 +181,9 @@ deck = pdk.Deck(
     map_style='mapbox://styles/mapbox/streets-v12',
     initial_view_state=view_state,
     layers=[layer],
+    tooltip = {
+    "html": "<b>{emp}</b> условная занятость на локации"
+}
 )
 
 # Display in Streamlit
