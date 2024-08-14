@@ -2,7 +2,6 @@ import streamlit as st
 import pydeck as pdk
 import geopandas as gpd
 import pandas as pd
-import h3
 from shapely.geometry import Polygon
 import numpy as np
 
