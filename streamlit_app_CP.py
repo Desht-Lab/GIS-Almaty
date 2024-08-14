@@ -14,10 +14,12 @@ almaty_XY = pd.read_pickle('CP_Hex_res9.pkl')
 
 full_df = gpd.GeoDataFrame(almaty_XY)
 
-# Streamlit UI
-if st.button("Back"):
-    # Redirect to an external URL (Google in this case)
-    st.write('<meta http-equiv="refresh" content="0; url=https://desht-lab.github.io/GIS-Almaty/" />', unsafe_allow_html=True)
+# Define the URL you want to redirect to
+url = "https://desht-lab.github.io/GIS-Almaty/"
+
+
+st.markdown(f'<a href="{url}" style="display:inline-block; padding:5px 10px; font-size:16px; color:#fff; background-color:#0e1117; border: 2px solid #ffffff; border-radius:5px; text-decoration:none;">Назад</a>', 
+            unsafe_allow_html=True)
 st.title("Модель центр-периферия")
 
 
