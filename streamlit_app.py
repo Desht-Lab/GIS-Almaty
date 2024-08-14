@@ -12,11 +12,6 @@ fields_sorted = fields.sort_values(by=['grand_section_code', 'oked2']).dropna()
 modified_column_names = fields_sorted['Desc'].unique().tolist()
 modified_column_names.insert(0, 'Все')
 
-url = "https://desht-lab.github.io/GIS-Almaty/"
-
-
-
-st.markdown(f'<a href="{url}"  style="display:inline-block; padding:5px 10px; font-size:16px; color:#fff; background-color:#0e1117; border: 2px solid #ffffff; border-radius:5px; text-decoration:none;">Назад</a>', unsafe_allow_html=True)
 
 st.title("Описательная статистика Алматинской агломерации")
 
