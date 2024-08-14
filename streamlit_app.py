@@ -182,7 +182,7 @@ deck = pdk.Deck(
     initial_view_state=view_state,
     layers=[layer],
     tooltip = {
-    "html": "<b>{emp}</b> условная занятость на локации"
+    "html": "<b>{selected_filter}</b> условная занятость на локации"
 }
 )
 
