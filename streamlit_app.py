@@ -6,6 +6,8 @@ import h3
 from shapely.geometry import Polygon
 import numpy as np
 
+
+
 # Load your data
 fields = pd.read_excel('группировка отраслей.xlsx')
 almaty_XY = pd.read_pickle('finalAlmatyFixedForCityClustering.pkl')
@@ -83,6 +85,22 @@ hexagon_gdf.columns = [
 ]
 modified_column_names = [col.split('_')[1] for col in sorted_columns_to_sum]
 hexagon_gdf['Все'] = hexagon_gdf[modified_column_names].sum(axis = 1)
+hexagon_gdf['empl'] = hexagon_gdf[modified_column_names].sum(axis = 1)
+merged_gdf_comp = gpd.sjoin(full_df, hexagon_gdf, how="inner", predicate='within', lsuffix='companies', rsuffix='right' )
+
+# Aggregate top 5 companies by employment for each hexagon
+def top_5_companies(hexagon_gdf):
+    top_5 = hexagon_gdf.nlargest(5, 'emp')
+    return ',<br>'.join([f"{row['organization_name']} ({row['emp']})"  for _, row in top_5.iterrows()])
+
+company_agg = merged_gdf_comp.groupby('index').apply(top_5_companies).reset_index()
+company_agg.columns = ['index', 'top_5_companies']
+
+# Merge the aggregated company names back to the original GeoDataFrame
+hexagon_gdf = hexagon_gdf.reset_index()
+
+hexagon_gdf = hexagon_gdf.merge(company_agg, left_on='index', right_on='index', how='left')
+hexagon_gdf['top_5_companies'] = hexagon_gdf['top_5_companies'].fillna('No companies')
 modified_column_names.insert(0, 'Все')
 
 # Streamlit UI
@@ -118,6 +136,8 @@ for _, row in hexagon_gdf.iterrows():
         "geometry": row["geometry"].__geo_interface__,
         "properties": {col: row[col] for col in modified_column_names},
     }
+    feature["properties"]["top_5_companies"] = row["top_5_companies"]
+    feature["properties"]["empl"] = row["empl"]
     features.append(feature)
 
 geojson = {
@@ -182,7 +202,8 @@ deck = pdk.Deck(
     initial_view_state=view_state,
     layers=[layer],
     tooltip = {
-    "html": "<b>{selected_filter}</b> условная занятость на локации"
+    "html": "<b>{empl}</b> условная занятость на локации<br> <b>Топ 5 компаний:</b> {top_5_companies}",
+    "style": {"background": "grey", "color": "white", "font-family": '"Helvetica Neue", Arial', "z-index": "10000"},
 }
 )
 
