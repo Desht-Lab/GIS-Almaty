@@ -18,16 +18,9 @@ full_df = gpd.GeoDataFrame(almaty_XY)
 url = "https://desht-lab.github.io/GIS-Almaty/"
 
 
-go_back = """
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-    <button onclick="goBack()" style="display:inline-block; padding:5px 10px; font-size:16px; color:#fff; background-color:#0e1117; border: 2px solid #ffffff; border-radius:5px; text-decoration:none;">Назад</button>
-"""
 
-st.markdown(go_back, unsafe_allow_html=True)
+st.markdown(f'<a href="{url}" target="_self" style="display:inline-block; padding:5px 10px; font-size:16px; color:#fff; background-color:#0e1117; border: 2px solid #ffffff; border-radius:5px; text-decoration:none;">Назад</a>', unsafe_allow_html=True)
+
 st.title("Модель центр-периферия")
 
 
