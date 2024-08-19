@@ -52,7 +52,7 @@ if selected_columns:
         else:
             mid_point = 1
             grey_stop = (mid_point - min_z) / (max_z - min_z)
-            white_stop = (mid_point - min_z + 0.00001) / (max_z - min_z)
+            white_stop = (mid_point - min_z + 0.00001) / (max_z - min_z)#
             colorscale = [
                 [0, 'grey'],           # Grey at min_z
                 [grey_stop, 'grey'],   # Grey until just before 1
