@@ -50,7 +50,7 @@ if selected_columns:
         if max_z == min_z:  # Handle the case where all values are the same
             colorscale = [[0, 'grey'], [1, 'grey']]
         else:
-            mid_point = 0.9999
+            mid_point = 0.99
             grey_stop = (mid_point - min_z) / (max_z - min_z)
             white_stop = (mid_point - min_z + 0.00001) / (max_z - min_z)#
             colorscale = [
