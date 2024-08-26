@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 # Load the data
 hexagon_gdf = pd.read_pickle('taxes.pkl').fillna(0)
 
-st.title("Описательная статистика Алматинской агломерации")
+st.title("Налоги Алматинской агломерации")
 selected_taxes = st.selectbox("Выбрать год", ['2022','2021'])
 
 # Toggle between logarithmic and absolute scale (default is logarithmic)
