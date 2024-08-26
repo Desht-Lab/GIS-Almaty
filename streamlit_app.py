@@ -13,7 +13,7 @@ modified_column_names = fields_sorted['Desc'].unique().tolist()
 modified_column_names.insert(0, 'Все')
 
 
-st.title("Описательная статистика Алматинской агломерации")
+st.title("Занятость Алматинской агломерации")
 
 # Filter selection
 selected_filter = st.selectbox("Выбрать отрасль", modified_column_names)

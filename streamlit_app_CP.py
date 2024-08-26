@@ -17,7 +17,7 @@ full_df = gpd.GeoDataFrame(almaty_XY)
 
 
 
-st.title("Модель центр-периферия")
+st.title("Модель центр-периферия для занятости")
 
 
 # Toggle elevation

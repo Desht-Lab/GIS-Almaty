@@ -51,7 +51,7 @@ fig.add_trace(go.Choroplethmapbox(
     geojson=geojson,
     locations=gdf.index,
     z=gdf['taxes'],
-    colorscale="Picnic",
+    colorscale="Plasma",
     marker_opacity=0.7,
     marker_line_width=0,
     text=gdf['hover_text']
