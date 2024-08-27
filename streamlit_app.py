@@ -6,10 +6,11 @@ import numpy as np
 
 hexagon_gdf = pd.read_pickle('descriptive_data_app.pkl')
 # Load your data
-fields = pd.read_excel('группировка отраслей.xlsx')
-
-fields_sorted = fields.sort_values(by=['grand_section_code', 'oked2']).dropna()
+fields = pd.read_excel('группировка отраслей_old.xlsx', sheet_name = 'oked')
+fields_sorted = fields.sort_values(by=['grand_section_code', 'oked2'])
+fields_sorted = fields_sorted[['Desc']].dropna()
 modified_column_names = fields_sorted['Desc'].unique().tolist()
+
 modified_column_names.insert(0, 'Все')
 
 
