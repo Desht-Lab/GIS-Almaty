@@ -63,7 +63,7 @@ if selected_columns:
                 [0, 'grey'],           # Grey at min_z
                 [grey_stop, 'grey'],   # Grey until just before 1
                 [white_stop, 'white'], # White just after 1
-                [1, 'red']             # Red at max_z
+                [1, '#d64550']             # Red at max_z
             ]
         return colorscale
 
