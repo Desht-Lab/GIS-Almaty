@@ -58,8 +58,8 @@ if selected_columns:
             grey_stop = (mid_point - min_z) / (max_z - min_z)
             white_stop = (mid_point - min_z + 0.00001) / (max_z - min_z)#
             colorscale = [
-                [0, 'black'],           # Grey at min_z
-                [grey_stop, 'black'],   # Grey until just before 1
+                [0, 'grey'],           # Grey at min_z
+                [grey_stop, 'grey'],   # Grey until just before 1
                 [white_stop, 'white'], # White just after 1
                 [1, '#376c8a']             # Red at max_z
             ]
