@@ -1,10 +1,11 @@
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-import json
 
-# Load the data
+# Load the RCA DataFrame
 rca_df = pd.read_pickle('rca.pkl')
+
+# Modified column names (categories)
 modified_column_names = ['A-Сельское, лесное и рыбное хозяйство',
        'B-Горнодобывающая промышленность и разработка карьеров',
        'C-Обрабатывающая промышленность Базовый передел',
@@ -30,64 +31,50 @@ modified_column_names = ['A-Сельское, лесное и рыбное хо�
        'Q-Здравоохранение и социальное обслуживание населения (другие)',
        'Q-Здравоохранение и социальное обслуживание населения (крупные, государственные)',
        'Q-Здравоохранение и социальное обслуживание населения (частные)']
-# Streamlit multiselect widget to choose columns to include in the radar chart
-selected_columns = st.selectbox("Выбрать отрасль", modified_column_names)
 
-# Check if any columns are selected
-if selected_columns:
-    # Convert merged GeoDataFrame's geometry to GeoJSON
-    geojson = json.loads(rca_df.geometry.to_json())
+# Select any number of clusters
+selected_clusters = st.multiselect('Выберите кластеры:', rca_df['asigned_cluster'].unique(), default=rca_df['asigned_cluster'].unique()[:2])
 
-    # Initialize Plotly Figure
-    fig = go.Figure()
+if not selected_clusters:
+    st.warning("Выберите хотябы 1 кластер")
+else:
+    # Filter data for the selected clusters
+    filtered_df = rca_df[rca_df['asigned_cluster'].isin(selected_clusters)]
 
-    # Assuming the first polygon's centroid is a good center point for initial view
-    center_lat, center_lon = 43.536224, 76.938093
+    # Create a horizontal bar chart
+    bar_fig = go.Figure()
 
-    def create_colorscale(min_z, max_z):
-        # Adjust breakpoints based on the min and max of z
-        if max_z == min_z:  # Handle the case where all values are the same
-            colorscale = [[0, 'grey'], [1, 'grey']]
-        else:
-            mid_point = 0.99
-            grey_stop = (mid_point - min_z) / (max_z - min_z)
-            white_stop = (mid_point - min_z + 0.00001) / (max_z - min_z)#
-            colorscale = [
-                [0, 'grey'],           # Grey at min_z
-                [grey_stop, 'grey'],   # Grey until just before 1
-                [white_stop, 'white'], # White just after 1
-                [1, '#376c8a']             # Red at max_z
-            ]
-        return colorscale
+    # Add bars for each selected cluster
+    for cluster in selected_clusters:
+        cluster_data = filtered_df[filtered_df['asigned_cluster'] == cluster]
+        bar_fig.add_trace(go.Bar(
+            y=modified_column_names,  # Categories on the y-axis
+            x=cluster_data[modified_column_names].values[0],  # RCA values on the x-axis
+            orientation='h',  # Horizontal bars
+            name=f'Cluster {cluster}'
+        ))
 
-    # Add the initial trace with the custom colorscale
-    z_values = rca_df[selected_columns].round(2)
-    min_z, max_z = z_values.min(), z_values.max()
-    custom_colorscale = create_colorscale(min_z, max_z)
-
-    fig.add_trace(go.Choroplethmapbox(
-        geojson=geojson,
-        locations=rca_df.index,
-        z=z_values,
-        colorscale=custom_colorscale,
-        marker_opacity=0.5,
-        marker_line_width=1
-        
+    # Add a dotted red line at RCA = 1
+    bar_fig.add_trace(go.Scatter(
+        y=modified_column_names,
+        x=[1] * len(modified_column_names),
+        mode='lines',
+        line=dict(color='red', dash='dash', width=2),
+        name='RCA = 1'
     ))
 
-    # Create buttons to switch between different columns
-    
-
-    # Update layout with OpenStreetMap style and centering on the first polygon
-    fig.update_layout(
-        mapbox_style="open-street-map",
-        mapbox_zoom=8,
-        mapbox_center={"lat": center_lat, "lon": center_lon}
+    # Customize the layout
+    bar_fig.update_layout(
+        title="Сравнение кластеров по RCA",
+        xaxis_title="RCA",
+        yaxis_title="Секции",
+        font=dict(
+            family="Gotham, sans-serif",  # Gotham font with a fallback to sans-serif
+            size=14  # Increased font size for PowerPoint visibility
+        ),
+        showlegend=True,
+        barmode='group'  # Group the bars side by side
     )
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0},
-                      updatemenus=[dict(active=0, font=dict(family="Gotham", size=11))])
 
-    # Display the figure in Streamlit
-    st.plotly_chart(fig)
-else:
-    st.warning("Please select at least one category to display the radar chart.")
+    # Display the bar chart in Streamlit
+    st.plotly_chart(bar_fig)
