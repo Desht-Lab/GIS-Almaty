@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 import json
+import numpy as np
 
 # Load the data
 rca_df = pd.read_pickle('rcaDetailed.pkl')
@@ -36,11 +37,39 @@ modified_column_names =['A-Сельское, лесное и рыбное хоз
        'Q-Здравоохранение и социальное обслуживание населения (крупные, государственные)',
        'Q-Здравоохранение и социальное обслуживание населения (частные)']
 
-# Streamlit multiselect widget to choose columns to include in the radar chart
+
+
+clusters = {
+    0: "Сельский",
+    1: "Мкр. Нур Алатау",
+    2: "Узынагаш",
+    3: "Периферийный",
+    4: "Талгар",
+    5: "Каскелен",
+    6: "Мкр. Горный Гигант",
+    7: "Есик",
+    8: "Суюнбая и Майлина",
+    9: "Отеген батыра",
+    10: "Микрорайоны и Орбита",
+    11: "ул. Рыскулова, от Бокейханова до Суюнбая",
+    12: "Конаев",
+    13: "Розыбакиева",
+    14: "Толе би-Саина",
+    15: "пр. Райымбека, от Розыбакиева до Саяхата",
+    16: "мкр. Коктем-1",
+    17: "пр. Достык",
+    18: "Золотой квадрат"
+}
+
 selected_columns = st.selectbox("Выбрать отрасль", modified_column_names)
 
-# Check if any columns are selected
 if selected_columns:
+    # Map cluster numbers to names
+    rca_df['cluster_name'] = rca_df['asigned_cluster'].map(clusters)
+
+    # Prepare custom data for hover information
+    customdata = np.stack((rca_df['asigned_cluster'], rca_df['cluster_name']), axis=-1)
+
     # Convert merged GeoDataFrame's geometry to GeoJSON
     geojson = json.loads(rca_df.geometry.to_json())
 
@@ -55,14 +84,14 @@ if selected_columns:
         if max_z == min_z:  # Handle the case where all values are the same
             colorscale = [[0, 'grey'], [1, 'grey']]
         else:
-            mid_point = 0.99
+            mid_point = 0.9999999
             grey_stop = (mid_point - min_z) / (max_z - min_z)
-            white_stop = (mid_point - min_z + 0.00001) / (max_z - min_z)#
+            white_stop = (mid_point - min_z + 0.0000001) / (max_z - min_z)
             colorscale = [
                 [0, 'grey'],           # Grey at min_z
                 [grey_stop, 'grey'],   # Grey until just before 1
                 [white_stop, 'white'], # White just after 1
-                [1, '#376c8a']             # Red at max_z
+                [1, '#376c8a']         # Custom color at max_z
             ]
         return colorscale
 
@@ -77,12 +106,14 @@ if selected_columns:
         z=z_values,
         colorscale=custom_colorscale,
         marker_opacity=0.5,
-        marker_line_width=1
-        
+        marker_line_width=1,
+        customdata=customdata,
+        hovertemplate=(
+            'Кластерный номер: %{customdata[0]}<br>'
+            'Название кластера: %{customdata[1]}<br>'
+            'Значение: %{z}<extra></extra>'
+        )
     ))
-
-    # Create buttons to switch between different columns
-    
 
     # Update layout with OpenStreetMap style and centering on the first polygon
     fig.update_layout(
@@ -95,5 +126,6 @@ if selected_columns:
 
     # Display the figure in Streamlit
     st.plotly_chart(fig)
+
 else:
     st.warning("Please select at least one category to display the radar chart.")

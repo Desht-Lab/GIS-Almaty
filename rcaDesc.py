@@ -36,8 +36,37 @@ joined_gdf['cluster_total_emp'] = joined_gdf['cluster_total_emp'].astype(int)
 
 # Streamlit selectors for AC19
 st.sidebar.title('Выбор кластеров')
-selected_ac1 = st.sidebar.selectbox('Выберите 1ый кластер', np.sort(joined_gdf['AC19'].unique()))
-selected_ac2 = st.sidebar.selectbox('Выберите 2ой кластер', np.sort(joined_gdf['AC19'].unique()))
+# Cluster dictionary
+clusters = {
+    0: "Сельский",
+    1: "Мкр. Нур Алатау",
+    2: "Узынагаш",
+    3: "Периферийный",
+    4: "Талгар",
+    5: "Каскелен",
+    6: "Мкр. Горный Гигант",
+    7: "Есик",
+    8: "Суюнбая и Майлина",
+    9: "Отеген батыра",
+    10: "Микрорайоны и Орбита",
+    11: "ул. Рыскулова, от Бокейханова до Суюнбая",
+    12: "Конаев",
+    13: "Розыбакиева",
+    14: "Толе би-Саина",
+    15: "пр. Райымбека, от Розыбакиева до Саяхата",
+    16: "мкр. Коктем-1",
+    17: "пр. Достык",
+    18: "Золотой квадрат"
+}
+
+# Map the cluster IDs to formatted strings (both key and value)
+cluster_options = [f'{key} - {value}' for key, value in clusters.items()]
+
+selected_ac1_name = st.sidebar.selectbox('Выберите 1ый кластер', cluster_options)
+selected_ac2_name = st.sidebar.selectbox('Выберите 2ой кластер', cluster_options)
+
+selected_ac1 = int(selected_ac1_name.split(' - ')[0])
+selected_ac2 = int(selected_ac2_name.split(' - ')[0])
 
 mean1 = joined_gdf[joined_gdf['AC19'] == selected_ac1].cluster_mean_emp.iloc[0]
 mean2 = joined_gdf[joined_gdf['AC19'] == selected_ac2].cluster_mean_emp.iloc[0]
@@ -102,12 +131,12 @@ fig.update_layout(
     barmode='group'  # Grouped bars
 )
 
-st.markdown("Средняя условная занятость кластера " + str(selected_ac1) + ": " + str(round(mean1,2)) + \
+st.markdown("Средняя условная занятость кластера " + selected_ac1_name + ": " + str(round(mean1,2)) + \
             '''  
-            Средняя условная занятость кластера ''' + str(selected_ac2) + ": " + str(round(mean2,2)))
-st.markdown('''Общая условная занятость кластера'''  + str(selected_ac1) + ''': ''' + f"{total1:,.0f}".replace(",", " ")+ \
+            Средняя условная занятость кластера ''' + selected_ac2_name + ": " + str(round(mean2,2)))
+st.markdown('''Общая условная занятость кластера '''  + selected_ac1_name + ''': ''' + f"{total1:,.0f}".replace(",", " ")+ \
             '''  
-            Общая условная занятость кластера ''' + str(selected_ac2) + ": " + f"{total2:,.0f}".replace(",", " ")
+            Общая условная занятость кластера ''' + selected_ac2_name + ": " + f"{total2:,.0f}".replace(",", " ")
 )
 # Convert figure to HTML and append to the list
 # Display the figure in Streamlit
