@@ -67,7 +67,7 @@ if selected_columns:
         return colorscale
 
     # Add the initial trace with the custom colorscale
-    z_values = rca_df[selected_columns].round(2)
+    z_values = rca_df[selected_columns]
     min_z, max_z = z_values.min(), z_values.max()
     custom_colorscale = create_colorscale(min_z, max_z)
 
