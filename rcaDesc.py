@@ -8,6 +8,7 @@ import streamlit as st
 import numpy as np
 
 joined_gdf = pd.read_pickle('joined_gdfDesc.pkl')
+
 section_name_mapping = {'A': 'A-Сельское, лесное и рыбное хозяйство',
  'B': 'B-Горнодобывающая промышленность и разработка карьеров',
  'C': 'C-Обрабатывающая промышленность',
@@ -38,6 +39,11 @@ st.sidebar.title('Выбор кластеров')
 selected_ac1 = st.sidebar.selectbox('Выберите 1ый кластер', np.sort(joined_gdf['AC19'].unique()))
 selected_ac2 = st.sidebar.selectbox('Выберите 2ой кластер', np.sort(joined_gdf['AC19'].unique()))
 
+mean1 = joined_gdf[joined_gdf['AC19'] == selected_ac1].cluster_mean_emp.iloc[0]
+mean2 = joined_gdf[joined_gdf['AC19'] == selected_ac2].cluster_mean_emp.iloc[0]
+
+total1 = joined_gdf[joined_gdf['AC19'] == selected_ac1].cluster_total_emp.iloc[0]
+total2 = joined_gdf[joined_gdf['AC19'] == selected_ac2].cluster_total_emp.iloc[0]
 # Calculate overall shares
 overall_shares = {}
 for section_code, section_name in section_name_mapping.items():
@@ -96,6 +102,13 @@ fig.update_layout(
     barmode='group'  # Grouped bars
 )
 
+st.markdown("Средняя условная занятость кластера " + str(selected_ac1) + ": " + str(round(mean1,2)) + \
+            '''  
+            Средняя условная занятость кластера ''' + str(selected_ac2) + ": " + str(round(mean2,2)))
+st.markdown('''Общая условная занятость кластера'''  + str(selected_ac1) + ''': ''' + f"{total1:,.0f}".replace(",", " ")+ \
+            '''  
+            Общая условная занятость кластера ''' + str(selected_ac2) + ": " + f"{total2:,.0f}".replace(",", " ")
+)
 # Convert figure to HTML and append to the list
 # Display the figure in Streamlit
 st.plotly_chart(fig)
