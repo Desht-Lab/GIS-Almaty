@@ -77,7 +77,7 @@ if selected_columns:
     fig = go.Figure()
 
     # Assuming the first polygon's centroid is a good center point for initial view
-    center_lat, center_lon = 43.536224, 76.938093
+    center_lat, center_lon =43.270507, 76.914576
 
     def create_colorscale(min_z, max_z):
         # Adjust breakpoints based on the min and max of z
@@ -118,7 +118,7 @@ if selected_columns:
     # Update layout with OpenStreetMap style and centering on the first polygon
     fig.update_layout(
         mapbox_style="open-street-map",
-        mapbox_zoom=8,
+        mapbox_zoom=11,
         mapbox_center={"lat": center_lat, "lon": center_lon}
     )
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0},
