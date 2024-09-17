@@ -7,7 +7,7 @@ import plotly.io as pio
 import streamlit as st
 import numpy as np
 
-joined_gdf = pd.read_pickle('joined_gdfDesc.pkl')
+joined_gdf = pd.read_pickle('Desc_joined_gdf.pkl')
 
 section_name_mapping = {'A': 'A-Сельское, лесное и рыбное хозяйство',
  'B': 'B-Горнодобывающая промышленность и разработка карьеров',
@@ -30,18 +30,18 @@ section_name_mapping = {'A': 'A-Сельское, лесное и рыбное �
  'S': 'S-Предоставление прочих видов услуг'}
 section_codes =dict(sorted(section_name_mapping.items()))
 # Assuming 'joined_gdf' is your GeoDataFrame
-joined_gdf['cluster_mean_emp'] = joined_gdf.groupby('AC19')['emp'].transform('mean')
-joined_gdf['cluster_total_emp'] = joined_gdf.groupby('AC19')['emp'].transform('sum')
+joined_gdf['cluster_mean_emp'] = joined_gdf.groupby('asigned_cluster')['emp'].transform('mean')
+joined_gdf['cluster_total_emp'] = joined_gdf.groupby('asigned_cluster')['emp'].transform('sum')
 joined_gdf['cluster_total_emp'] = joined_gdf['cluster_total_emp'].astype(int)
 
-# Streamlit selectors for AC19
+# Streamlit selectors for asigned_cluster
 st.sidebar.title('Выбор кластеров')
 # Cluster dictionary
 clusters = {
     0: "Сельский",
     1: "Мкр. Нур Алатау",
-    2: "Узынагаш",
-    3: "Периферийный",
+    3: "Узынагаш",
+    2: "Периферийный",
     4: "Талгар",
     5: "Каскелен",
     6: "Мкр. Горный Гигант",
@@ -68,11 +68,11 @@ selected_ac2_name = st.sidebar.selectbox('Выберите 2ой кластер'
 selected_ac1 = int(selected_ac1_name.split(' - ')[0])
 selected_ac2 = int(selected_ac2_name.split(' - ')[0])
 
-mean1 = joined_gdf[joined_gdf['AC19'] == selected_ac1].cluster_mean_emp.iloc[0]
-mean2 = joined_gdf[joined_gdf['AC19'] == selected_ac2].cluster_mean_emp.iloc[0]
+mean1 = joined_gdf[joined_gdf['asigned_cluster'] == selected_ac1].cluster_mean_emp.iloc[0]
+mean2 = joined_gdf[joined_gdf['asigned_cluster'] == selected_ac2].cluster_mean_emp.iloc[0]
 
-total1 = joined_gdf[joined_gdf['AC19'] == selected_ac1].cluster_total_emp.iloc[0]
-total2 = joined_gdf[joined_gdf['AC19'] == selected_ac2].cluster_total_emp.iloc[0]
+total1 = joined_gdf[joined_gdf['asigned_cluster'] == selected_ac1].cluster_total_emp.iloc[0]
+total2 = joined_gdf[joined_gdf['asigned_cluster'] == selected_ac2].cluster_total_emp.iloc[0]
 # Calculate overall shares
 overall_shares = {}
 for section_code, section_name in section_name_mapping.items():
@@ -83,7 +83,7 @@ overall_shares_list = [overall_shares[code] for code in section_name_mapping.key
 
 # Calculate shares for the selected clusters
 def calculate_cluster_shares(cluster_id):
-    cluster_data = joined_gdf[joined_gdf['AC19'] == cluster_id]
+    cluster_data = joined_gdf[joined_gdf['asigned_cluster'] == cluster_id]
     cluster_total_emp = cluster_data['cluster_total_emp'].iloc[0]
     cluster_shares = [
         cluster_data[f"grand_section_code_{section_code}_hex"].sum() / cluster_total_emp * 100
