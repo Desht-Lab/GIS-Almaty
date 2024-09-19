@@ -103,7 +103,9 @@ fig.add_trace(go.Bar(
     x=list(section_name_mapping.keys()),
     y=overall_shares_list,
     name='Всего',
-    marker=dict(color='#828388')
+    marker=dict(color='#828388'),
+    hovertext=[f"{code}: {section_name}" for code, section_name in section_name_mapping.items()],
+    hoverinfo='text+y'  # Display hover text and value (percentage)
 ))
 
 # Add bar for the first selected cluster
@@ -111,7 +113,9 @@ fig.add_trace(go.Bar(
     x=list(section_name_mapping.keys()),
     y=cluster1_shares,
     name=f'Кластер {selected_ac1}',
-    marker=dict(color='#376c8a')
+    marker=dict(color='#376c8a'),
+    hovertext=[f"{code}: {section_name}" for code, section_name in section_name_mapping.items()],
+    hoverinfo='text+y'  # Display hover text and value (percentage)
 ))
 
 # Add bar for the second selected cluster
@@ -119,7 +123,9 @@ fig.add_trace(go.Bar(
     x=list(section_name_mapping.keys()),
     y=cluster2_shares,
     name=f'Кластер {selected_ac2}',
-    marker=dict(color='#c59f72')  # You can change the color if needed
+    marker=dict(color='#c59f72'),
+    hovertext=[f"{code}: {section_name}" for code, section_name in section_name_mapping.items()],
+    hoverinfo='text+y'  # Display hover text and value (percentage)
 ))
 
 # Update layout
@@ -130,6 +136,9 @@ fig.update_layout(
     hovermode='closest',
     barmode='group'  # Grouped bars
 )
+
+
+
 
 st.markdown("Средняя условная занятость кластера " + selected_ac1_name + ": " + str(round(mean1,2)) + \
             '''  
